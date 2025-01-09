@@ -134,47 +134,49 @@ include "koneksi.php";
 <!-- article end -->
     <!-- gallery begin -->
     <section id="gallery" class="text-center p-5 bg-primary-subtle">
-      <div class="container">
-        <h1 class="fw-bold display-4 pb-3">gallery</h1>
-        <div id="carouselExample" class="carousel slide">
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img src="img/gallery1.jpg" class="d-block w-100" alt="..." />
-            </div>
-            <div class="carousel-item">
-              <img src="img/gallery2.jpg" class="d-block w-100" alt="..." />
-            </div>
-            <div class="carousel-item">
-              <img src="img/gallery3.jpg" class="d-block w-100" alt="..." />
-            </div>
-            <div class="carousel-item">
-              <img src="img/gallery4.jpg" class="d-block w-100" alt="..." />
-            </div>
-            <div class="carousel-item">
-              <img src="img/galerry5.jpg" class="d-block w-100" alt="..." />
+  <div class="container">
+    <h1 class="fw-bold display-4 pb-3">Gallery</h1>
+    <div id="galleryCarousel" class="carousel slide">
+      <div class="carousel-inner">
+        <?php
+        // Query untuk mengambil data dari tabel gallery
+        $sql = "SELECT * FROM gallery ORDER BY tanggal DESC";
+        $hasil = $conn->query($sql);
+
+        $isFirst = true; // Flag untuk menentukan item pertama
+        while ($row = $hasil->fetch_assoc()) {
+          ?>
+          <div class="carousel-item <?= $isFirst ? 'active' : '' ?>">
+            <div class="card h-100 mx-auto" style="width: 80%;">
+              <img src="img/<?= htmlspecialchars($row['gambar']) ?>" class="card-img-top" alt="..." />
             </div>
           </div>
-          <button
-            class="carousel-control-prev"
-            type="button"
-            data-bs-target="#carouselExample"
-            data-bs-slide="prev"
-          >
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button
-            class="carousel-control-next"
-            type="button"
-            data-bs-target="#carouselExample"
-            data-bs-slide="next"
-          >
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-        </div>
+          <?php
+          $isFirst = false; // Set item berikutnya menjadi non-aktif
+        }
+        ?>
       </div>
-    </section>
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#galleryCarousel"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#galleryCarousel"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+</section>
     <!-- gallery end -->
     <!-- schedule begin -->
     <section id="schedule" class="text-center p-5">
